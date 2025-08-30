@@ -1,4 +1,9 @@
 # Databricks notebook source
+# MAGIC %md
+# MAGIC
+
+# COMMAND ----------
+
 spark
 
 # COMMAND ----------
@@ -55,3 +60,16 @@ df_csv = spark.read.csv("/Volumes/workspace/default/sample_file_for_testing/2010
 # COMMAND ----------
 
 df_csv.display()
+
+# COMMAND ----------
+
+#Project-K learning
+data_df=spark.read.option('delimiter',',').csv('/Volumes/workspace/default/sample_file_for_testing/2010-summary.csv')
+data_df.display()
+
+# COMMAND ----------
+
+spark.sql("DROP TABLE IF EXISTS workspace.default.projectk")
+spark.sql("CREATE TABLE workspace.default.projectk (DEST_COUNTRY_NAME string,ORIGIN_COUNTRY_NAME string,count integer) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','")
+
+spark.sql("LOAD DATA LOCAL INPATH '/Volumes/workspace/default/sample_file_for_testing/2010-summary.csv' INTO TABLE workspace.default.projectk")
